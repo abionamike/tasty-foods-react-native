@@ -1,6 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-// import { composeWithDevTools } from 'redux-devtools-extension';
-import { composeWithDevTools } from 'remote-redux-devtools';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 const signInreducer = (state = [], action) => {
@@ -16,10 +15,8 @@ const reducer = combineReducers({
   signIn: signInreducer,
 });
 
-const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });
-
 const middleware = [thunk];
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(...middleware)));
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(...middleware)));
 
 export default store;
