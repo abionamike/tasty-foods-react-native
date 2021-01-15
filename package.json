@@ -9,9 +9,11 @@
     "postinstall": "rndebugger-open --open --port 8081"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.2",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "expo": "~40.0.0",
+    "expo-constants": "~9.3.3",
     "expo-image-picker": "~9.2.0",
     "expo-status-bar": "~1.0.3",
     "react": "16.13.1",
@@ -24,8 +26,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "remote-redux-devtools": "0.5.0",
-    "expo-constants": "~9.3.3"
+    "remote-redux-devtools": "0.5.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

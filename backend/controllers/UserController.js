@@ -6,8 +6,7 @@ const getUsers = async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (error) {
-    res.status(404);
-    throw new Error('Users not found');
+    res.status(404).json({ error: 'Users not found' });
   }
 };
 

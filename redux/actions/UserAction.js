@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as constants from '../constants/userConstants';
 import { API_URL } from '@env';
 
@@ -16,15 +17,14 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch({ type: constants.USER_LOGIN_SUCCESS, payload: data });
 
-    // eslint-disable-next-line no-undef
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    await AsyncStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: constants.USER_LOGIN_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });
   }
 };
 
 export const logout = () => async (dispatch) => {
-  localStorage.removeItem('userInfo');
+  await AsyncStorage.removeItem('userInfo');
   dispatch({ type: constants.USER_LOGOUT });
   dispatch({ type: constants.USER_DETAILS_RESET });
 };
@@ -45,7 +45,7 @@ export const register = (name, email, password) => async (dispatch) => {
 
     dispatch({ type: constants.USER_LOGIN_SUCCESS, payload: data });
 
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    await AsyncStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: constants.USER_REGISTER_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });
   }
