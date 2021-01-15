@@ -1,4 +1,5 @@
 import Product from '../models/ProductModel.js';
+import fs from 'fs';
 
 const getProducts = async (req, res) => {
   try {
@@ -37,27 +38,23 @@ const createproduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    if (req.user.isAdmin) {
-      const {
-        name, price, category, image, rating, description,
-      } = req.body;
+    const {
+      name, price, category, image, rating, description,
+    } = req.body;
 
-      const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
 
-      if (product !== null) {
-        product.name = name || product.name;
-        product.price = price || product.price;
-        product.category = category || product.category;
-        product.image = image || product.image;
-        product.rating = rating || product.rating;
-        product.description = description || product.description;
-      }
-
-      const updatedProduct = await product?.save();
-      res.json(updatedProduct);
-    } else {
-      res.status(401).json({ error: 'Unauthorized, token failed' });
+    if (product !== null) {
+      product.name = name || product.name;
+      product.price = price || product.price;
+      product.category = category || product.category;
+      product.image = image || product.image;
+      product.rating = rating || product.rating;
+      product.description = description || product.description;
     }
+
+    const updatedProduct = await product?.save();
+    res.json(updatedProduct);
   } catch (error) {
     res.status(401).json({ error: error.message });
   }
@@ -67,6 +64,14 @@ const deleteProduct = async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (product) {
+    const img = product.image.split('/')[1];
+    
+    fs.unlink(`./upload/images/${img}`, (err) => {
+      if (err) {
+        res.json({ error: err.message });
+      }
+    });
+
     await product.remove();
     res.json({ message: 'Product removed' });
   } else {

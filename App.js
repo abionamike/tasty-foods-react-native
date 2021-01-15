@@ -5,9 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from './redux/store';
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { API_URL } from '@env';
 
 export default function App() {
   const [image, setImage] = useState(null);
@@ -21,6 +19,7 @@ export default function App() {
         }
       }
     })();
+    console.log(API_URL);
   }, []);
 
   const pickImage = async () => {
@@ -37,7 +36,7 @@ export default function App() {
         },
       };
 
-      const { data } = await axios.post(`http://${process.env.IP}:5000/api/uploads`, { image: result.base64 }, config);
+      const { data } = await axios.post(`${API_URL}/api/uploads`, { image: result.base64 }, config);
 
       console.log(data);
     } catch (error) {
