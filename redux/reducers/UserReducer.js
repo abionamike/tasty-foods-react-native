@@ -1,4 +1,4 @@
-import * as actions from '../constants/userConstants'
+import * as actions from '../constants/UserConstants'
 
 export const userLoginReducer = (state = { }, action) => {
   switch (action.type) {
