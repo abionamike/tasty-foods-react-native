@@ -5,57 +5,15 @@ import { Feather, FontAwesome } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 
 const SignUpScreen = ({ navigation }) => {
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-    confirm_password: '',
-    check_textInputChange: false,
-    secureTextEntry: true,
-    confirm_secureTextEntry: true,
-  });
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
 
-  const textInputChange = (val) => {
-    if(val.length !== 0){
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true
-      });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false
-      })
-    }
-  }
-
-  const handlePasswordChange = (val) => {
-    setData({
-      ...data,
-      password: val,
-    });
-  }
-
-  const handleConfirmPasswordChange = (val) => {
-    setData({
-      ...data,
-      confirm_password: val,
-    });
-  }
-
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry
-    });
-  }
-
-  const updateConfirmSecureTextEntry = () => {
-    setData({
-      ...data,
-      confirm_secureTextEntry: !data.confirm_secureTextEntry
-    });
+  const handleSubmit = () => {
+    console.log({ fullName, email, password, confirmPassword });
   }
 
   return (
@@ -65,7 +23,7 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.text_header}>Register Now!</Text>
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-        <Text style={styles.text_footer}>Email</Text>
+        <Text style={styles.text_footer}>Full name</Text>
         <View style={styles.action}>
           <FontAwesome
             name="user-o"
@@ -73,26 +31,27 @@ const SignUpScreen = ({ navigation }) => {
             size={20}
           />
           <TextInput 
-            placeholder="Your Email"
-            // placeholderTextColor={colors.placeholder}
+            placeholder="Your full name(first name first)"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(val) => textInputChange(val)}
+            onChangeText={(val) => setFullName(val)}
           />
-          {data.check_textInputChange ? 
-            <Animatable.View
-              animation="bounceIn"
-            >
-              <Feather 
-                name="check-circle"
-                color="green"
-                size={20}
-              />
-            </Animatable.View> :
-            null
-          }
         </View>
-        <Text style={[styles.text_footer, { marginTop: 35 }]}>Password</Text>
+        <Text style={[styles.text_footer, { marginTop: 20 }]}>Email</Text>
+        <View style={styles.action}>
+          <FontAwesome
+            name="envelope-o"
+            color="grey"
+            size={20}
+          />
+          <TextInput 
+            placeholder="Your Email"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText={(val) => setEmail(val)}
+          />
+        </View>
+        <Text style={[styles.text_footer, { marginTop: 20 }]}>Password</Text>
         <View style={styles.action}>
           <Feather
             name="lock"
@@ -101,16 +60,15 @@ const SignUpScreen = ({ navigation }) => {
           />
           <TextInput 
             placeholder="Your Password"
-            // placeholderTextColor={colors.placeholder}
-            secureTextEntry={data.secureTextEntry ? true : false}
+            secureTextEntry={secureTextEntry ? true : false}
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(val) => handlePasswordChange(val)}
+            onChangeText={(val) => setPassword(val)}
           />
           <TouchableOpacity
-            onPress={updateSecureTextEntry}
+            onPress={() => setSecureTextEntry(!secureTextEntry)}
           >
-            {data.secureTextEntry ? 
+            {secureTextEntry ? 
               <Feather 
                 name="eye-off"
                 color="grey"
@@ -124,7 +82,7 @@ const SignUpScreen = ({ navigation }) => {
             }
           </TouchableOpacity>
         </View>
-        <Text style={[styles.text_footer, { marginTop: 35 }]}>Confirm Password</Text>
+        <Text style={[styles.text_footer, { marginTop: 20 }]}>Confirm Password</Text>
         <View style={styles.action}>
           <Feather
             name="lock"
@@ -133,16 +91,15 @@ const SignUpScreen = ({ navigation }) => {
           />
           <TextInput 
             placeholder="Your Password"
-            // placeholderTextColor={colors.placeholder}
-            secureTextEntry={data.confirm_secureTextEntry ? true : false}
+            secureTextEntry={confirmSecureTextEntry ? true : false}
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(val) => handleConfirmPasswordChange(val)}
+            onChangeText={(val) => setConfirmPassword(val)}
           />
           <TouchableOpacity
-            onPress={updateConfirmSecureTextEntry}
+            onPress={() => setConfirmSecureTextEntry(!confirmSecureTextEntry)}
           >
-            {data.confirm_secureTextEntry ? 
+            {confirmSecureTextEntry ? 
               <Feather 
                 name="eye-off"
                 color="grey"
@@ -157,12 +114,14 @@ const SignUpScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.button}>
-          <LinearGradient
-            colors={['#D95407', '#862d04']}
-            style={styles.signIn}
-          >
-            <Text style={[styles.textSign, { color: '#fff' }]}>Sign Up</Text>
-          </LinearGradient>
+          <TouchableOpacity style={{ width: '100%' }} onPress={handleSubmit}>
+            <LinearGradient
+              colors={['#D95407', '#862d04']}
+              style={styles.signIn}
+            >
+              <Text style={[styles.textSign, { color: '#fff' }]}>Sign Up</Text>
+            </LinearGradient>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('SignIn')}
             style={[styles.signIn, {
@@ -224,7 +183,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    marginTop: 50
+    marginTop: 35
   },
   signIn: {
     width: '100%',
