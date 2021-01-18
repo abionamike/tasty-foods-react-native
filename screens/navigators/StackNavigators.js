@@ -17,11 +17,12 @@ const HomeStackNavigator = ({ navigation }) => {
         backgroundColor: '#fff',
       },
       headerTitleAlign: 'center',
-      // headerLeft: () => <MaterialIcons name="menu" size={28} color="#862d04" style={{ marginLeft: 8 }} onPress={() => navigation.openDrawer()} />,
     }}>
-      <Stack.Screen name="Home" component={HomeScreen} options={{
-        headerTitle: ({ navigation }) => <Header navigation={navigation} />
-      }} />
+      <Stack.Screen 
+        name="Home" 
+        component={HomeScreen} 
+        options={({navigation}) => ({headerTitle: () => <Header navigation={navigation} title="Tasty Foods" />})} 
+      />
     </Stack.Navigator>
   )
 }
@@ -35,9 +36,12 @@ const OrdersStackNavigator = ({ navigation }) => {
         backgroundColor: '#fff',
       },
       headerTitleAlign: 'center',
-      headerLeft: () => <MaterialIcons name="menu" size={28} color="#862d04" style={{ marginLeft: 8 }} onPress={() => navigation.openDrawer()} />,
     }}>
-      <Stack.Screen name="My Orders" component={OrdersScreen} />
+      <Stack.Screen 
+        name="My Orders" 
+        component={OrdersScreen} 
+        options={({navigation}) => ({headerTitle: () => <Header navigation={navigation} title="My Orders" />})}
+      />
     </Stack.Navigator>
   )
 }

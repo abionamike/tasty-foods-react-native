@@ -1,14 +1,17 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
 
-const Header = ({ navigation }) => {
+const Header = ({ title, navigation }) => {
   return (
     <View style={styles.header}>
-      <MaterialIcons name="menu" size={28} color="#862d04" style={styles.menu} onPress={() => navigation.openDrawer()} />
+      <MaterialIcons name="menu" size={28} color="#05375a" style={styles.menu} onPress={() => navigation.openDrawer()} />
       <View style={styles.headerTitle}>
-        <Text style={styles.headerText}>Tasty Foods</Text>
-        <Image source={require('../assets/foodie-imgs/fork-n-knife.png')} style={styles.headerImage} />
+        <Text style={styles.headerText}>{title}</Text>
+        {title === "Tasty Foods" ? <Image source={require('../assets/foodie-imgs/fork-n-knife.png')} style={styles.headerImage} /> :
+          <Ionicons name="cart" size={30} color="#05375a" />
+        }
+        
       </View>
     </View>
   )
