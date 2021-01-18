@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Text, View, StyleSheet, TextInput, Platform, TouchableOpacity, StatusBar } from 'react-native';
 import { LinearGradient }  from 'expo-linear-gradient';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
+import { register } from '../redux/actions/UserAction';
 
 const SignUpScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
+  const [isValidPassword, setIsValidPassword] = useState(true)
 
   const handleSubmit = () => {
-    console.log({ fullName, email, password, confirmPassword });
+    if(password !== confirmPassword){
+      setIsValidPassword(false);
+      return;
+    }
+    dispatch(register(fullName, email, password));
   }
 
   return (
@@ -23,6 +32,10 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.text_header}>Register Now!</Text>
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+        {isValidPassword ? null : 
+        <Animatable.View animation="fadeInLeft" duration={500}>
+          <Text style={styles.errorMsg}>Passwords do not match</Text>
+        </Animatable.View>}
         <Text style={styles.text_footer}>Full name</Text>
         <View style={styles.action}>
           <FontAwesome
@@ -195,5 +208,10 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: 'bold'
+  },
+  errorMsg: {
+    color: 'crimson',
+    marginBottom: 5,
+    fontSize: 16
   }
 });

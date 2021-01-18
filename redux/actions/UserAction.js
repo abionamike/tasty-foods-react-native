@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as constants from '../constants/userConstants';
+import * as constants from '../constants/UserConstants';
 import { API_URL } from '@env';
 
 export const login = (email, password) => async (dispatch) => {
@@ -13,12 +13,15 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
+    // console.log('b4 stored to local', data);
     const { data } = await axios.post(`${API_URL}/api/users/login`, { email, password }, config);
 
     dispatch({ type: constants.USER_LOGIN_SUCCESS, payload: data });
 
     await AsyncStorage.setItem('userInfo', JSON.stringify(data));
+    console.log('stored to local', data);
   } catch (error) {
+    console.log(error.message);
     dispatch({ type: constants.USER_LOGIN_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });
   }
 };
@@ -29,7 +32,7 @@ export const logout = () => async (dispatch) => {
   dispatch({ type: constants.USER_DETAILS_RESET });
 };
 
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (fullName, email, password) => async (dispatch) => {
   try {
     dispatch({ type: constants.USER_REGISTER_REQUEST });
 
@@ -39,14 +42,16 @@ export const register = (name, email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(`${API_URL}/api/users`, { name, email, password }, config);
+    const { data } = await axios.post(`${API_URL}/api/users`, { fullName, email, password }, config);
 
     dispatch({ type: constants.USER_REGISTER_SUCCESS, payload: data });
 
     dispatch({ type: constants.USER_LOGIN_SUCCESS, payload: data });
 
     await AsyncStorage.setItem('userInfo', JSON.stringify(data));
+    console.log('register success');
   } catch (error) {
+    console.log('error in register');
     dispatch({ type: constants.USER_REGISTER_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });
   }
 };

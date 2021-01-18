@@ -28,6 +28,7 @@ const getUserInfo = async () => {
     const userInfoFromStorage = await AsyncStorage.getItem('userInfo');
 
     return userInfoFromStorage !== null ? JSON.parse(userInfoFromStorage) : null;
+    
   } catch(error) {
     console.log(error);
   }

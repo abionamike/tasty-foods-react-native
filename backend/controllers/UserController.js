@@ -20,7 +20,7 @@ const userLogin = async (req, res) => {
       await user.matchPassword(password) ? (
         res.json({
           _id: user._id,
-          name: user.name,
+          name: user.fullName,
           email: user.email,
           isAdmin: user.isAdmin,
           token: generateToken(user._id),
@@ -38,20 +38,19 @@ const userLogin = async (req, res) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-
-    const user = await User.create({ name, email, password });
+    const { fullName, email, password } = req.body;
+    const user = await User.create({ fullName, email, password });
 
     res.status(201).json({
       _id: user._id,
-      name: user.name,
+      name: user.fullName,
       email: user.email,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
+
   } catch (error) {
-    const errors = handleErrors(error);
-    res.status(404).json({ errors });
+    res.status(404).json({ error: error.message });
   }
 };
 
@@ -80,7 +79,7 @@ const updateUser = async (req, res) => {
   const user = await User.findById(req.params.id);
 
   if (user) {
-    user.name = req.body.name || user.name;
+    user.fullName = req.body.fullName || user.fullName;
     user.email = req.body.email || user.email;
     user.isAdmin = req.body.isAdmin;
     user.password = req.body.password || user.password;
@@ -89,7 +88,7 @@ const updateUser = async (req, res) => {
 
     res.json({
       _id: updatedUser._id,
-      name: updatedUser.name,
+      name: updatedUser.fullName,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
     });
