@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import {
@@ -14,7 +14,8 @@ const CustomDrawerContent = ({ navigation }) => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector(state => state.userLogin);
 
-  const avatarText = userInfo && userInfo.name.split(' ');
+  console.log('draw', userInfo);
+  // const avatarText = userInfo && userInfo.name.split(' ');
 
   const handleSignOut = async () => {
     try {
@@ -34,7 +35,7 @@ const CustomDrawerContent = ({ navigation }) => {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: 'row', marginTop: 25 }}>
-              <Avatar.Text size={50} label={avatarText && avatarText[0][0] + avatarText[1][0]} />
+              <Avatar.Text size={50} label="ja" />
               <View style={{ marginLeft: 15 }}>
                 <Title style={styles.title}>{userInfo && userInfo.name}</Title>
                 <Caption style={styles.caption}>{userInfo && userInfo.email}</Caption>

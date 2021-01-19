@@ -1,37 +1,48 @@
-import React from 'react';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStackNavigator, OrdersStackNavigator } from './StackNavigators';
+import { Ionicons } from '@expo/vector-icons'; 
 
 const BottomTabNavigator = () => {
-  const Tab = createMaterialBottomTabNavigator();
-  return(
-    <Tab.Navigator 
-      initialRouteName="Home"
-      barStyle={{ backgroundColor: '#862d04' }}
+  const Tab = createBottomTabNavigator();
+
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home'
+              : 'home';
+          } else if (route.name === 'My Orders') {
+            iconName = focused ? 'cart' : 'cart';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: '#D95407',
+        inactiveTintColor: 'gray',
+        style: {
+          backgroundColor: 'hsl(25, 100%, 96%)',
+          position: 'absolute',
+        }
+      }}
     >
-      <Tab.Screen 
-        name="Home" 
-        component={HomeStackNavigator} 
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="home-outline" color={color} size={22} />
-          ),
-        }}
-      />
-      <Tab.Screen 
-        name="My Orders" 
-        component={OrdersStackNavigator} 
-        options={{
-          tabBarLabel: 'My Orders',
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="cart-outline" size={24} color={color} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
+      <Tab.Screen name="My Orders" component={OrdersStackNavigator} />
     </Tab.Navigator>
-  )
+  );
 }
 
 export default BottomTabNavigator;
+
+const styles = StyleSheet.create({
+  barstyle: {
+
+  }
+});
