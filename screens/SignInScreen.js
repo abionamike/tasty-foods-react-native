@@ -30,7 +30,7 @@ const SigInScreen = ({ navigation }) => {
 
   return (
     <>
-      {image && <Image source={require('../assets/foodie-imgs/preloader.png')} resizeMode="cover" style={styles.loader} />}
+      {loading && <Image source={require('../assets/foodie-imgs/preloader.png')} resizeMode="cover" style={styles.loader} />}
       <StatusBar backgroundColor="#6b290b" barStyle="light-content" />
       <View style={styles.container}>
         <View style={styles.header}>

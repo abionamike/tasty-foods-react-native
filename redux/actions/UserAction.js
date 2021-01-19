@@ -13,7 +13,6 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    // console.log('b4 stored to local', data);
     const { data } = await axios.post(`${API_URL}/api/users/login`, { email, password }, config);
 
     dispatch({ type: constants.USER_LOGIN_SUCCESS, payload: data });

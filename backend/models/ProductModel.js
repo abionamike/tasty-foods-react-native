@@ -18,7 +18,12 @@ const productSchema = new mongoose.Schema({
     required: true,
     type: Number
   },
-  review: [reviewSchema]
+  review: [reviewSchema],
+  likes: {
+    required: true,
+    type: Number,
+    default: 0
+  }
 }, {
   timestamps: true
 });
