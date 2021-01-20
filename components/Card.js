@@ -1,17 +1,18 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
 const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
-const Card = () => {
+const CardItem = () => {
   return (
-    <Card>
+    <Card style={styles.card}>
+      <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
       <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
       <Card.Content>
         <Title>Card title</Title>
         <Paragraph>Card content</Paragraph>
       </Card.Content>
-      <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
       <Card.Actions>
         <Button>Cancel</Button>
         <Button>Ok</Button>
@@ -20,8 +21,12 @@ const Card = () => {
   );
 }
 
-export default Card;
+export default CardItem;
 
 const styles = StyleSheet.create({
-  
+  card: {
+    height: 320,
+    width: 300,
+    marginTop: 20
+  }
 });
