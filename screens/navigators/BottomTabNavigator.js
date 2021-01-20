@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStackNavigator, OrdersStackNavigator } from './StackNavigators';
 import { Ionicons } from '@expo/vector-icons'; 
@@ -40,9 +39,3 @@ const BottomTabNavigator = () => {
 }
 
 export default BottomTabNavigator;
-
-const styles = StyleSheet.create({
-  barstyle: {
-
-  }
-});

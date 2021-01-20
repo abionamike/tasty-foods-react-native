@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#6b290b'
   },
   loader: {
-    position: 'absolute',
     left: 0,
     top: 0,
     width: '100%',
