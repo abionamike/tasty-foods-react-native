@@ -18,9 +18,7 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({ type: constants.USER_LOGIN_SUCCESS, payload: data });
 
     await AsyncStorage.setItem('userInfo', JSON.stringify(data));
-    console.log('stored to local', data);
   } catch (error) {
-    console.log(error.message);
     dispatch({ type: constants.USER_LOGIN_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });
   }
 };
