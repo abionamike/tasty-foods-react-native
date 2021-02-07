@@ -14,21 +14,18 @@ const CustomDrawerContent = ({ navigation }) => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector(state => state.userLogin);
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ name: 'John Doe' });
   
   if(!userInfo.name){
     userInfo.then((res) => setUser(res));
   }
   const avatarText = userInfo.name ? userInfo.name.split(' ') : user.name.split(' ');
-  console.log(userInfo);
 
   const handleSignOut = async () => {
     try {
       await AsyncStorage.removeItem('userInfo');
       dispatch(logout());
 
-      const userInfoFromStorage = await AsyncStorage.getItem('userInfo');
-      console.log(JSON.parse(userInfoFromStorage));
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +37,7 @@ const CustomDrawerContent = ({ navigation }) => {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: 'row', marginTop: 25 }}>
-              <Avatar.Text size={50} label={avatarText && avatarText[0][0] + avatarText[1][0]} />
+              <Avatar.Text size={50} label={avatarText && avatarText[0][0] + avatarText[1][0]} style={{ backgroundColor: '#862d04' }} />
               <View style={{ marginLeft: 15 }}>
                 <Title style={styles.title}>{userInfo.name ? userInfo.name : user.name}</Title>
                 <Caption style={styles.caption}>{userInfo.email ? userInfo.email : user.email}</Caption>

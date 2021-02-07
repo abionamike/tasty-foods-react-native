@@ -8,7 +8,7 @@ import DrawerNavigator from './screens/navigators/DrawerNavigator';
 
 export default function AppRoot() {
   const { userInfo } = useSelector(state => state.userLogin);
-  console.log('root', userInfo);
+
   return (
     <View style={styles.container}>
       <NavigationContainer>
